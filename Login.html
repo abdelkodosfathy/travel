@@ -165,6 +165,8 @@
                     document.getElementById('log-form').reset();
                     alert("login successfully");
                     window.location.href = 'index.html';
+                } else if (data.message[0][0]){
+                    alert(data.message[0][0].message);
                 }
             console.log(data);
             })
