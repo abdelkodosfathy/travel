@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Hotel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-xl navbar-light bg-light pb-4 px-5">
+    <a class="navbar-brand active" href="index.html">Key of travel</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav nav-tabs ">
+        <li class="nav-item ">
+          <a class="nav-link " href="city.html">City</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="hotel.html">Hotel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="trip.html">Trip</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="program.html">Program</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="user.html">User</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="trip_reservation.html">Trip Resevation</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="hotel_reservation.html">Hotel Resevation</a>
+        </li>
+      </ul>
+    </div>  
+  </nav>
+
+    <div class="container justify-content-between">
+        <h3>All Hotels</h3>
+        <hr>
+
+        <a class="btn btn-primary btn-small mb-3 " href="hotel_form.html">
+            Add Hotel</a>
+        <table class="table table-border table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Singel room Price</th>
+                    <th>Double room Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="5">
+                  <div class="loading-icon">
+                    <div class="loader"></div>  
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <script>
+      let hotelsData = [];
+
+      // Fetch hotelsData
+      fetch('https://projectone-h83j.onrender.com/hotel/')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        hotelsData = data.hotels;
+        console.log(hotelsData);
+        renderHotelsTable();
+      })
+      .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+      });
+
+      function updateHotel(i) {
+        const x = document.querySelector(`#hotel_image${i}`)
+        x.click();
+        console.log(x);
+        const hotel = hotelsData[i];
+        const updatedName = prompt('Enter the updated hotel name:', hotel.name);
+        const updatedCityName = prompt('Enter the updated city name:', hotel.cityname);
+        const updatedSingleRoomPrice = prompt('Enter the updated single room price:', hotel.singleRoomprice);
+        const updatedDoubleRoomPrice = prompt('Enter the updated double room price:', hotel.doubleRoomprice);
+        // const updatedImage = prompt('choose the image :');
+        
+        
+        const apiUrl = 'https://projectone-h83j.onrender.com/';
+        const formData = {
+          name: updatedName,
+          cityname: updatedCityName,
+          singleRoomprice: updatedSingleRoomPrice,
+          doubleRoomprice: updatedDoubleRoomPrice,
+        };
+
+        const id = hotel._id;
+        fetch(apiUrl+'hotel/update/'+id, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(newHotelData => {
+          // Process the newly updated hotel data
+          console.log('New Hotel Data:', newHotelData);
+          hotelsData[i] = newHotelData;
+          location.reload();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+
+      function deleteHotel(i){
+        console.log(hotelsData[i]._id);
+        const hotel_id = hotelsData[i]._id;
+        const deleteUrl = `https://projectone-h83j.onrender.com/hotel/delete/${hotel_id}`;
+        console.log(deleteUrl);
+        fetch(deleteUrl, {
+          method: 'DELETE'
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          console.log('Hotel deleted successfully');
+
+          // Remove hotel from hotelsData array and update the UI
+          hotelsData.splice(i, 1);
+          renderHotelsTable();
+        })
+        .catch(error => {
+          console.error('There was a problem with the delete operation:', error);
+        });
+      }
+
+      function renderHotelsTable(){
+        const tbody = document.querySelector("tbody");
+        tbody.innerHTML = '';
+        hotelsData.forEach((hotel, i) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="fw-bold fs-4">${hotel.name}</td>
+            <td class="fw-bold fs-4">Alex</td>
+            <td class="fw-bold fs-4">${hotel.singleRoomprice}</td>
+            <td class="fw-bold fs-4">${hotel.doubleRoomprice}</td>
+            <td>
+              <input id="hotel_image${i}" type="file" style="display:none;">
+              <button id="hotel_update_btn_${i}" onclick="updateHotel(${i})" class="btn btn-info btb-sm">Update</button>
+              <button id="hotel_delete_btn_${i}" onclick="deleteHotel(${i})" class="btn btn-danger btb-sm">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+
+      // Call the uploadFile function whenever you want to upload a file
+
+      console.log(document.querySelector("tbody"));
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Add Hotel</title>
+</head>
+<body>
+
+
+    <div class="container">
+      <h3>Hotel Directory</h3>
+
+      <hr>
+
+      <p class="h4 mb-4">Save Hotel</p>
+
+      <form action="#" method="post">
+        <input type="hidden">
+        <input type="text" name="name" class="form-control mb-4 w-25" placeholder="Hotel Name" >
+        <input type="text" name="cityname" class="form-control mb-4 w-25" placeholder="City Name" >
+        <input type="text" name="singleRoomprice" class="form-control mb-4 w-25" placeholder="Singel room Price" >
+        <input type="text" name="doubleRoomprice" class="form-control mb-4 w-25" placeholder="Double room Price" >
+        <input type="file" name="hotel" required class="form-control mb-4 w-25" accept="image/*">
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+      </form>
+      <br>
+
+      <a href="hotel.html" class="link-offset-2 link-underline link-underline-opacity-0 ">Back to Hotel Dashbord</a>
+    </div>
+
+
+
+
+
+
+
+<script>
+  document.querySelector('form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  if(formData.get('cityname') == "" || formData.get('hotel') == null){
+    // Handle validation errors
+  } else {
+    fetch('https://projectone-h83j.onrender.com/hotel/create', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if(data.message === "done"){
+        alert(`${data.hotel.name} added to hotels`);
+      }
+      else if(data.message === "hotel exist"){
+        alert(`This hotel already exists`);
+      }
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('There was a problem with your fetch operation:', error);
+    });
+  }
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
