@@ -238,15 +238,15 @@
             return response.json();
             })
             .then(data => {
-                if(data.message === "email exist"){
-                    alert("this email is already exist");
-                }
-                else if(data.message === "done"){
-                    alert(` Sign up successful! Welcome ${data.user.fname}`);
-                    
-                } 
-                else if(data.message === "\"email\" must be a valid email"){
-
+                console.log(data);
+                if(data.message === "done"){
+                    document.getElementById('reg-form').reset();
+                    alert("email created successfully");
+                    window.location.href = 'index.html';
+                } else if(data.message[0][0]){
+                    alert(data.message[0][0].message);
+                }else {
+                    alert('error.. try to reload or check data')
                 }
             })
             .catch(error => {

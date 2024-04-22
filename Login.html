@@ -162,11 +162,15 @@
                 if(data.message === "done"){
                     console.log("login");/// log in successfuly
                     sessionStorage.setItem('isLoggedIn', 'true');
+                    document.getElementById('log-form').reset();
+                    alert("login successfully");
                     window.location.href = 'index.html';
                 }
             console.log(data);
             })
             .catch(error => {
+                console.log(error);
+                alert('passowrd or account is not correct');
             });
             
         })
