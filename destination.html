@@ -261,6 +261,14 @@
 
     <!-- Template Javascript -->
     <script>
+
+
+
+
+
+
+
+
         const programsContainer = document.querySelector(".programs")
         fetch("https://projectone-h83j.onrender.com/program")
         .then(response => response.json())
@@ -269,6 +277,15 @@
             if(data.message === "done"){
             programsContainer.innerHTML = ''
             data.programs.forEach((program, i) => {
+                
+                fetch("https://projectone-h83j.onrender.com/hotel")
+                .then(response => response.json())
+                .then(data => {
+                    console.log("hotel: ", data.hotels[i].image.secure_url);
+                    let hotelImage = data.hotels[i].image.secure_url;
+                    console.log("hotel: ", hotelImage);
+                    return hotelImage
+                }).then( (img) => {
                 const createdProgram = document.createElement("div");
                 createdProgram.classList.add("program");
                 createdProgram.innerHTML = `
@@ -277,7 +294,7 @@
                 <div class="row program-${i}">
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="destination-item position-relative overflow-hidden mb-2">
-                            <img class="img-fluid" src="img/destination-1.jpg" alt="">
+                            <img class="img-fluid" src="${img}" alt="">
                             <a class="destination-overlay text-white text-decoration-none" href="">
                                 <h5 class="text-white">${program.hotel_name}</h5>
                                 <!-- <span>100 Cities</span> -->
@@ -286,12 +303,27 @@
                     </div>
                 </div>
                 `;
+                let trips = [];
+                fetch("https://projectone-h83j.onrender.com/trip")
+                .then(response => response.json())
+                .then(data => {
+                    console.log("trips: ", data.trips);
+                    trips = data.trips;
+                }).then( () => {
+
                 program.trips.forEach((trip) => {
+                    let imageURL;
+                    for(let i =0; i < trips.length; i ++){
+                        if(trips[i].tripname === trip){
+                            console.log(trips[i].image.secure_url);
+                            imageURL = trips[i].image.secure_url;
+                        }
+                    }
                     const myTrip = document.createElement("div");
                     myTrip.classList.add("col-lg-4", "col-md-6", "mb-4");
                     myTrip.innerHTML = `
                     <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="img/destination-2.jpg" alt="">
+                        <img class="img-fluid" src="${imageURL}" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="">
                             <h5 class="text-white">${trip}</h5>
                             <span>100 Cities</span>
@@ -299,11 +331,13 @@
                     </div>
                     `
                     createdProgram.querySelector(`.program-${i}`).appendChild(myTrip);
-                })
+                })})
 
                 // console.log(data.programs[i])
                 // console.log(createdProgram);
                 programsContainer.appendChild(createdProgram)
+                });
+
                 // return createdProgram;
             })}
         });
