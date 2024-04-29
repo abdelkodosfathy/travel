@@ -123,8 +123,28 @@
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Hotels</h6>
                 <h1>Choose your Hotel</h1>
             </div>
-            <div class="row">
+            <div class="row hotels-container">
                 <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="package-item bg-white mb-2">
+                        <img class="img-fluid" src="img/package-1.jpg" alt="">
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
+                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
+                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
+                            </div>
+                            <a class="h5 text-decoration-none" href="">Sonesta</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    <h6 class="mr-5">$350</h6>
+                                    <h6 class="mr-5">$350</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
                         <img class="img-fluid" src="img/package-1.jpg" alt="">
                         <div class="p-4">
@@ -223,27 +243,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="img/package-1.jpg" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Sonesta</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h6 class="mr-5">$350</h6>
-                                    <h6 class="mr-5">$350</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -386,6 +386,45 @@
     <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
+    <script>
+        fetch('https://projectone-h83j.onrender.com/hotel')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+            })
+            .then(data => {
+                console.log(data.hotels);
+                const hotelsContainer = document.querySelector(".hotels-container");
+                data.hotels.forEach(element => {
+                    const hotel = document.createElement("div");
+                    hotel.classList.add("col-lg-4" , "col-md-6" , "mb-4")
+                    hotel.innerHTML = `
+                    <div class="package-item bg-white mb-2">
+                        <img class="img-fluid" src="${element.image.secure_url}" alt="" w-100>
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>${element.cityname}</small>
+                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
+                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
+                            </div>
+                            <a class="h5 text-decoration-none" href="">${element.name}</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    <h6 class="mr-5">$${element.singleRoomprice}</h6>
+                                    <h6 class="mr-5">$${element.doubleRoomprice}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    hotelsContainer.appendChild(hotel)
+                    console.log(element);
+                });
+            });
+    </script>
     <script src="js/main.js"></script>
 </body>
 

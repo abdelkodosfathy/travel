@@ -134,7 +134,7 @@
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Trips</h6>
                 <h1>Pefect Tour Trips</h1>
             </div>
-            <div class="row">
+            <div class="row trips-container">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
                         <img class="img-fluid" src="img/package-1.jpg" alt="">
@@ -154,7 +154,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
+                <!-- <div class="col-lg-4 col-md-6 mb-4">
                     <div class="package-item bg-white mb-2">
                         <img class="img-fluid" src="img/package-1.jpg" alt="">
                         <div class="p-4">
@@ -305,7 +305,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -448,6 +448,44 @@
     <script src="mail/contact.js"></script>
 
     <!-- Template Javascript -->
+    <script>
+        fetch('https://projectone-h83j.onrender.com/trip')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+            })
+            .then(data => {
+                console.log(data.trips);
+                const tripsContainer = document.querySelector(".trips-container");
+                data.trips.forEach(element => {
+                    const trip = document.createElement("div");
+                    trip.classList.add("col-lg-4" , "col-md-6" , "mb-4")
+                    trip.innerHTML = `
+                    <div class="package-item bg-white mb-2">
+                        <img class="img-fluid" src="${element.image.secure_url}" alt="">
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>${element.cityname}</small>
+                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>${element.duration}</small>
+                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Person</small>
+                            </div>
+                            <a class="h5 text-decoration-none" href="">${element.tripname}</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    <h5 class="m-0">$${element.price}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    tripsContainer.appendChild(trip)
+                    console.log(element);
+                });
+            });
+    </script>
     <script src="js/main.js"></script>
 </body>
 
