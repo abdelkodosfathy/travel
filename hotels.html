@@ -27,6 +27,17 @@
 </head>
 
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                console.log('User is logged in: true');
+            } else {
+                console.log('User is logged in: false');
+                window.location.href = 'Login.html';
+            }
+        });
+    </script>
        <!-- Topbar Start -->
     <div class="container-fluid bg-light pt-3 d-none d-lg-block">
         <div class="container">
