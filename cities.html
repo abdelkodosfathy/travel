@@ -91,8 +91,8 @@
                         <a href="about.html" class="nav-item nav-link">About</a>
                         <a href="cities.html" class="nav-item nav-link active">Cities</a>
                         <a href="destination.html" class="nav-item nav-link">Programs</a>
-                        <a href="hotels.html" class="nav-item nav-link">Hotels</a>
-                        <a href="trips.html" class="nav-item nav-link">Trips</a>
+                        <a onclick="hotels()" class="nav-item nav-link">Hotels</a>
+                        <a onclick="trips()" class="nav-item nav-link">Trips</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu border-0 rounded-0 m-0">
@@ -138,6 +138,7 @@
                         <div class="loading-icon">
                             <div class="loader"></div>  
                         </div>
+                        
                     </div>
                     <div class="col-12">
                         <nav aria-label="Page navigation">
@@ -262,7 +263,6 @@
 
             function addCity(cityName, cityTmage) {
             const cityContainer = document.getElementById('cityContainer');
-
             // Create a new city item
             const newCityItem = document.createElement('div');
             newCityItem.classList.add('col-md-6', 'mb-4', 'pb-2');
@@ -276,9 +276,9 @@
                     </div>
                     <div class="bg-white p-4">
                         <div class="d-flex mb-2">
-                            <a class="text-primary text-uppercase text-decoration-none" href="hotels.html">Hotels</a>
+                            <a class="text-primary text-uppercase text-decoration-none" onclick="setHotels('${cityName}')">Hotels</a>
                             <span class="text-primary px-2">|</span>
-                            <a class="text-primary text-uppercase text-decoration-none" href="trips.html">Tours & Travel</a>
+                            <a class="text-primary text-uppercase text-decoration-none" onclick="setTrips('${cityName}')">Trips</a>
                         </div>
                     </div>
                 </div>
@@ -287,6 +287,26 @@
             // Append the new city item to the cityContainer
             cityContainer.appendChild(newCityItem);
         }
+        function setTrips(c){
+            console.log("city: ", c);
+            sessionStorage.setItem('city', c);
+            console.log("city",sessionStorage.getItem("city"));
+            location.href= "trips.html";
+        }
+        function setHotels(c){
+            console.log("city: ", c);
+            sessionStorage.setItem('city', c);
+            console.log("city",sessionStorage.getItem("city"));
+            location.href= "hotels.html";
+        }
+        function trips(){
+                sessionStorage.removeItem("city");
+                location.href = "trips.html";
+            }
+        function hotels(){
+                sessionStorage.removeItem("city");
+                location.href = "hotels.html";
+            }
         // Example usage: Add a new city named "Cairo"
     </script>
     <script src="js/main.js">

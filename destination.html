@@ -90,8 +90,8 @@
                         <a href="about.html" class="nav-item nav-link">About</a>
                         <a href="cities.html" class="nav-item nav-link">Cities</a>
                         <a href="destination.html" class="nav-item nav-link active">Programs</a>
-                        <a href="hotels.html" class="nav-item nav-link active">Hotels</a>
-                        <a href="trips.html" class="nav-item nav-link active">Trips</a>
+                        <a onclick="hotels()" class="nav-item nav-link">Hotels</a>
+                        <a onclick="trips()" class="nav-item nav-link">Trips</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu border-0 rounded-0 m-0">
@@ -140,7 +140,7 @@
                     <div class="loader"></div>
                 </div>
 
-                <div class="program">
+                <!-- <div class="program">
                     <h3 class="mt-5 mb-2">Program Name</h3>
                     <br>
                     <div class="row">
@@ -164,7 +164,7 @@
                         </div>
                         
                     </div>
-                </div>
+                </div> -->
                 
             </div>
         </div>
@@ -269,74 +269,89 @@
         fetch("https://projectone-h83j.onrender.com/program")
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            console.log(data);
             if(data.message === "done"){
-            programsContainer.innerHTML = ''
-            data.programs.forEach((program, i) => {
-                
-                fetch("https://projectone-h83j.onrender.com/hotel")
-                .then(response => response.json())
-                .then(data => {
-                    console.log("hotel: ", data.hotels[i].image.secure_url);
-                    let hotelImage = data.hotels[i].image.secure_url;
-                    console.log("hotel: ", hotelImage);
-                    return hotelImage
-                }).then( (img) => {
-                const createdProgram = document.createElement("div");
-                createdProgram.classList.add("program");
-                createdProgram.innerHTML = `
-                <h3 class="mt-5 mb-2">${program.program_name}</h3>
-                <br>
-                <div class="row program-${i}">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="destination-item position-relative overflow-hidden mb-2">
-                            <img class="img-fluid" src="${img}" alt="">
-                            <a class="destination-overlay text-white text-decoration-none" href="">
-                                <h5 class="text-white">${program.hotel_name}</h5>
-                                <!-- <span>100 Cities</span> -->
-                            </a>
+                programsContainer.innerHTML = '';
+                data.programs.forEach((program, i) => {
+                    const createdProgram = document.createElement("div");
+                    createdProgram.classList.add("program");
+                    createdProgram.innerHTML = `
+                    <div class="d-flex mt-5">
+                        <h3 class=" mb-2">${program.program_name}</h3>
+                        <button class="btn btn-success btb-sm mx-3" onclick="booking('${program._id}')">
+                            book now
+                        </button>
+                    </div>
+                    <br>
+                    <div class="row program-${i}">
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="destination-item position-relative overflow-hidden mb-2">
+                                <img class="img-fluid" src="${program.hotelimage.secure_url}" alt="">
+                                <a class="destination-overlay text-white text-decoration-none">
+                                    <h5 class="text-white">${program.hotel_name}</h5>
+                                    <!-- <span>100 Cities</span> -->
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                `;
-                let trips = [];
-                fetch("https://projectone-h83j.onrender.com/trip")
-                .then(response => response.json())
-                .then(data => {
-                    console.log("trips: ", data.trips);
-                    trips = data.trips;
-                }).then( () => {
-
-                program.trips.forEach((trip) => {
-                    let imageURL;
-                    for(let i =0; i < trips.length; i ++){
-                        if(trips[i].tripname === trip){
-                            console.log(trips[i].image.secure_url);
-                            imageURL = trips[i].image.secure_url;
-                        }
-                    }
-                    const myTrip = document.createElement("div");
-                    myTrip.classList.add("col-lg-4", "col-md-6", "mb-4");
-                    myTrip.innerHTML = `
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="${imageURL}" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="">
-                            <h5 class="text-white">${trip}</h5>
-                            <span>100 Cities</span>
-                        </a>
-                    </div>
                     `
-                    createdProgram.querySelector(`.program-${i}`).appendChild(myTrip);
-                })})
-
-                // console.log(data.programs[i])
-                // console.log(createdProgram);
-                programsContainer.appendChild(createdProgram)
+                    let myTrips = [];
+                    fetch("https://projectone-h83j.onrender.com/trip")
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.message === "done"){
+                            return data.trips;
+                        }
+                    }).then( (e) => {
+                        program.trips.forEach(trip => {
+                            e.forEach(t =>{
+                                if(trip === t.tripname){
+                                    console.log("trip name: ", t.tripname);
+                                    console.log(t);
+                                    const myTrip = document.createElement("div");
+                                    myTrip.classList.add("col-lg-4", "col-md-6", "mb-4");
+                                    myTrip.innerHTML = `
+                                    <div class="destination-item position-relative overflow-hidden mb-2">
+                                        <img class="img-fluid" src="${t.image.secure_url}" alt="">
+                                        <a class="destination-overlay text-white text-decoration-none">
+                                            <h5 class="text-white">${t.tripname}</h5>
+                                            <span>100 Cities</span>
+                                        </a>
+                                    </div>`
+                                    createdProgram.querySelector(".row").appendChild(myTrip)
+                                }
+                            })
+                        })
+                    })
+                    programsContainer.appendChild(createdProgram);
                 });
-
-                // return createdProgram;
-            })}
-        });
+            }
+        })
+        function booking(program){
+            const user = localStorage.getItem("userId");
+            console.log(program);
+            console.log(user);
+            fetch(`https://projectone-h83j.onrender.com/boking/${user}/${program}`, {
+                method: "post"
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if(data.message === "Done"){
+                    alert("successfuly booked the program.. wait our accept mail");
+                }
+                else {
+                    console.log("??");
+                }
+            })
+        }
+        function trips(){
+            sessionStorage.removeItem("city");
+            location.href = "trips.html";
+        }
+        function hotels(){
+            sessionStorage.removeItem("city");
+            location.href = "hotels.html";
+        }
     </script>
     <script src="js/main.js"></script>
 </body>

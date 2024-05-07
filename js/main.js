@@ -68,3 +68,24 @@
     
 })(jQuery);
 
+
+
+
+
+
+let users = [
+    {
+    // userName: "ahmed",
+    userID: 1,
+    userFirst: "ahmed",
+    userLast: "fathy",
+    passPort: "12315646",
+    userAccout: "account@gmail.com",
+    userApplied: {
+        trip: false | "id",
+        hotel: false | "id",
+        program: false | "id"
+    },
+
+    }
+]

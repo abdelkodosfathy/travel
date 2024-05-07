@@ -85,7 +85,7 @@
                                 <a href="index.html" class="nav-item nav-link ">Home</a>
                                 <a href="about.html" class="nav-item nav-link">About</a>
                                 <a href="cities.html" class="nav-item nav-link">Cities</a>
-                                <a href="trips.html" class="nav-item nav-link">Trips</a>
+                                <a onclick="trips()" class="nav-item nav-link">Trips</a>
                                 
                                 <!-- <div class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
@@ -159,8 +159,13 @@
             return response.json();
             })
             .then(data => {
+                console.log("loged: ",data);
+                // "662fc7d8af6a75b59119c4c5"
+                // "662fc7d8af6a75b59119c4c5"
                 if(data.message === "done"){
                     console.log("login");/// log in successfuly
+                    localStorage.setItem("userId", data.user._id);
+                    console.log(localStorage.getItem("userId"));
                     sessionStorage.setItem('isLoggedIn', 'true');
                     document.getElementById('log-form').reset();
                     alert("login successfully");
@@ -174,11 +179,7 @@
                 console.log(error);
                 alert('passowrd or account is not correct');
             });
-            
-        })
-
-
-        
+        })        
     </script>
 
 
@@ -254,6 +255,16 @@
         <script src="mail/contact.js"></script>
     
         <!-- Template Javascript -->
+        <script>
+        function trips(){
+            sessionStorage.removeItem("city");
+            location.href = "trips.html";
+        }
+        function hotels(){
+            sessionStorage.removeItem("city");
+            location.href = "hotels.html";
+        }
+        </script>
         <script src="js/main.js"></script>
     
 </body>

@@ -79,8 +79,8 @@
                         <a href="about.html" class="nav-item nav-link">About</a>
                         <a href="cities.html" class="nav-item nav-link ">Cities</a>
                         <a href="destination.html" class="nav-item nav-link">Programs</a>
-                        <a href="hotels.html" class="nav-item nav-link active">Hotels</a>
-                        <a href="trips.html" class="nav-item nav-link active">Trips</a>
+                        <a onclick="hotels()" class="nav-item nav-link active">Hotels</a>
+                        <a onclick="trips()" class="nav-item nav-link">Trips</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu border-0 rounded-0 m-0">
@@ -245,6 +245,9 @@
                         </div>
                     </div>
                 </div> -->
+                <div class="loading-icon">
+                    <div class="loader"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -320,6 +323,7 @@
 
     <!-- Template Javascript -->
     <script>
+        const city = sessionStorage.getItem("city");
         fetch('https://projectone-h83j.onrender.com/hotel')
         .then(response => {
             if (!response.ok) {
@@ -330,7 +334,40 @@
             .then(data => {
                 console.log(data.hotels);
                 const hotelsContainer = document.querySelector(".hotels-container");
-                data.hotels.forEach(element => {
+                hotelsContainer.innerHTML = '';
+                console.log(city);
+                if(city){
+                    data.hotels.forEach(element => {
+                        if(element.cityname === city){
+                            const hotel = document.createElement("div");
+                            hotel.classList.add("col-lg-4" , "col-md-6" , "mb-4")
+                            hotel.innerHTML = `
+                            <div class="package-item bg-white mb-2">
+                                <img class="img-fluid" src="${element.image.secure_url}" alt="" w-100>
+                                <div class="p-4">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>${element.cityname}</small>
+                                        <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
+                                        <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
+                                    </div>
+                                    <a class="h5 text-decoration-none" onclick="booking('${element._id}')>${element.name}</a>
+                                    <div class="border-top mt-4 pt-4">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                            <h6 class="mr-5">$${element.singleRoomprice}</h6>
+                                            <h6 class="mr-5">$${element.doubleRoomprice}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                            hotelsContainer.appendChild(hotel)
+                            console.log(element)
+                        }
+                    });
+                }else {
+                    console.log(data);
+                    data.hotels.forEach(element => {
                     const hotel = document.createElement("div");
                     hotel.classList.add("col-lg-4" , "col-md-6" , "mb-4")
                     hotel.innerHTML = `
@@ -342,7 +379,10 @@
                                 <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
                                 <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
                             </div>
-                            <a class="h5 text-decoration-none" href="">${element.name}</a>
+                            <div class="d-flex justify-content-between w-100">
+                                <a class="h5 text-decoration-none">${element.name}</a>
+                                <button class="btn btn-success btb-sm " onclick="booking('${element._id}')">book now</button>
+                            </div>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
@@ -354,9 +394,31 @@
                     </div>
                     `
                     hotelsContainer.appendChild(hotel)
-                    console.log(element);
-                });
+                    console.log(element)
+                    });
+                }
             });
+            function booking(hotel){
+                const user = localStorage.getItem("userId");
+                console.log(user);
+                fetch(`https://projectone-h83j.onrender.com/boking/${user}/${hotel}`, {
+                    method: "post"
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+                    if(data.message === "Done"){
+                        alert("successfuly booked the hotel.. wait our accept mail");
+                    }
+                })
+            }
+            function trips(){
+                sessionStorage.removeItem("city");
+                location.href = "trips.html";
+            }
+            function hotels(){
+                sessionStorage.removeItem("city");
+                location.href = "hotels.html";
+            }
     </script>
     <script src="js/main.js"></script>
 </body>

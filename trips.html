@@ -90,8 +90,8 @@
                         <a href="about.html" class="nav-item nav-link">About</a>
                         <a href="cities.html" class="nav-item nav-link">Cities</a>
                         <a href="destination.html" class="nav-item nav-link">Programs</a>
-                        <a href="hotels.html" class="nav-item nav-link active">Hotels</a>
-                        <a href="trips.html" class="nav-item nav-link active">Trips</a>
+                        <a onclick="hotels()" class="nav-item nav-link">Hotels</a>
+                        <a onclick="trips()" class="nav-item nav-link active">Trips</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu border-0 rounded-0 m-0">
@@ -307,6 +307,9 @@
                         </div>
                     </div>
                 </div> -->
+                <div class="loading-icon">
+                    <div class="loader"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -382,17 +385,22 @@
 
     <!-- Template Javascript -->
     <script>
+        const city = sessionStorage.getItem("city");
         fetch('https://projectone-h83j.onrender.com/trip')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             return response.json();
-            })
-            .then(data => {
-                console.log(data.trips);
-                const tripsContainer = document.querySelector(".trips-container");
+        })
+        .then(data => {
+            console.log(data.trips);
+            const tripsContainer = document.querySelector(".trips-container");
+            tripsContainer.innerHTML='';
+            if(city){
+                console.log(city);
                 data.trips.forEach(element => {
+                if(element.cityname === city){
                     const trip = document.createElement("div");
                     trip.classList.add("col-lg-4" , "col-md-6" , "mb-4")
                     trip.innerHTML = `
@@ -404,7 +412,7 @@
                                 <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>${element.duration}</small>
                                 <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Person</small>
                             </div>
-                            <a class="h5 text-decoration-none" href="">${element.tripname}</a>
+                            <a class="h5 text-decoration-none" onclick="booking('${element._id}')">${element.tripname}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
                                     <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
@@ -415,9 +423,61 @@
                     </div>
                     `
                     tripsContainer.appendChild(trip)
-                    console.log(element);
-                });
+                    console.log(element)
+                }
             });
+            }else {
+                data.trips.forEach(element => {
+                const trip = document.createElement("div");
+                trip.classList.add("col-lg-4" , "col-md-6" , "mb-4");
+                trip.innerHTML = `
+                <div class="package-item bg-white mb-2">
+                    <img class="img-fluid" src="${element.image.secure_url}" alt="">
+                    <div class="p-3">
+                        <div class="d-flex justify-content-between mb-3">
+                            <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>${element.cityname}</small>
+                            <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>${element.duration}</small>
+                            <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Person</small>
+                        </div>
+                        <div class="d-flex justify-content-between w-100">
+                            <a class="h5 text-decoration-none">${element.tripname}</a>
+                            <button class="btn btn-success btb-sm " onclick="booking('${element._id}')">book now</button>
+                        </div>
+                        <div class="border-top mt-4 pt-4">
+                            <div class="d-flex justify-content-between">
+                                <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                <h5 class="m-0">$${element.price}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
+                tripsContainer.appendChild(trip)
+                console.log(element);
+                });
+            }
+        });
+        function booking(trip){
+            const user = localStorage.getItem("userId");
+            console.log(user);
+            fetch(`https://projectone-h83j.onrender.com/boking/${user}/${trip}`, {
+                method: "post"
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if(data.message === "Done"){
+                    alert("successfuly booked the trip.. wait our accept mail");
+                }
+            })
+        }
+        function trips(){
+            sessionStorage.removeItem("city");
+            location.href = "trips.html";
+        }
+        function hotels(){
+            sessionStorage.removeItem("city");
+            location.href = "hotels.html";
+        }
     </script>
     <script src="js/main.js"></script>
 </body>

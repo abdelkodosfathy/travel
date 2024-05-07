@@ -9758,7 +9758,7 @@ h6,
 .blog-date {
   position: absolute;
   width: 170px;
-  height: 45px;
+  min-height: 45px;
   top: 30px;
   left: -15px;
   display: flex;
