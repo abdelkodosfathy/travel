@@ -24,6 +24,52 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+     <style>
+        .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 10; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0); 
+        background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-form{
+
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-content {
+        background-color: #fefefe;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        }
+
+        .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+    </style>
+
+
 </head>
 
 <body>
@@ -33,7 +79,7 @@
             <div class="row">
                 <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
                     <div class="d-inline-flex align-items-center">
-                        <p><i class="fa fa-envelope mr-2"></i>KeyOfTravel@KeyOfTravel.com</p>
+                        <p><i class="fa fa-envelope mr-2"></i>Keyoftravel200@gmail.com</p>
                         <p class="text-body px-3">|</p>
                         <p><i class="fa fa-phone-alt mr-2"></i>+20 122 413 3261</p>
                     </div>
@@ -125,126 +171,7 @@
                 <h1>Choose your Hotel</h1>
             </div>
             <div class="row hotels-container">
-                <!-- <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="img/package-1.jpg" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Sonesta</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h6 class="mr-5">$350</h6>
-                                    <h6 class="mr-5">$350</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="img/package-1.jpg" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Sonesta</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h6 class="mr-5">$350</h6>
-                                    <h6 class="mr-5">$350</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="img/package-1.jpg" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Sonesta</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h6 class="mr-5">$350</h6>
-                                    <h6 class="mr-5">$350</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="img/package-1.jpg" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Sonesta</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h6 class="mr-5">$350</h6>
-                                    <h6 class="mr-5">$350</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="img/package-1.jpg" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Sonesta</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h6 class="mr-5">$350</h6>
-                                    <h6 class="mr-5">$350</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img class="img-fluid" src="img/package-1.jpg" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Luxer</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
-                                <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="">Sonesta</a>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                    <h6 class="mr-5">$350</h6>
-                                    <h6 class="mr-5">$350</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+               
                 <div class="loading-icon">
                     <div class="loader"></div>
                 </div>
@@ -303,7 +230,9 @@
     </div>
     <!-- Footer End -->
 
+    <div id="myModal" class="modal">
 
+    </div>
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
@@ -350,7 +279,13 @@
                                         <small class="m-0"><i class="fa fa-user fa-user text-primary mr-2"></i>1 Person</small>
                                         <small class="m-0"><i class="fa fa-user fa-user text-primary "></i><i class="fa fa-user fa-user text-primary mr-2"></i>2 Persons</small>
                                     </div>
-                                    <a class="h5 text-decoration-none" onclick="booking('${element._id}')>${element.name}</a>
+
+                                    
+                                <div class="d-flex justify-content-between w-100">
+                                    <a class="h5 text-decoration-none">${element.name}</a>
+                                    <button class="btn btn-success btb-sm " onclick="booking('${element._id}')">book now</button>
+                                </div>
+
                                     <div class="border-top mt-4 pt-4">
                                         <div class="d-flex justify-content-between">
                                             <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
@@ -398,27 +333,100 @@
                     });
                 }
             });
-            function booking(hotel){
-                const user = localStorage.getItem("userId");
-                console.log(user);
-                fetch(`https://projectone-h83j.onrender.com/boking/${user}/${hotel}`, {
-                    method: "post"
-                }).then(response => {
-                    return response.json();
-                }).then(data => {
-                    if(data.message === "Done"){
-                        alert("successfuly booked the hotel.. wait our accept mail");
-                    }
-                })
+            // function booking(hotel){
+            //     const user = localStorage.getItem("userId");
+            //     console.log(user);
+            //     fetch(`https://projectone-h83j.onrender.com/boking/${user}/${hotel}`, {
+            //         method: "post"
+            //     }).then(response => {
+            //         return response.json();
+            //     }).then(data => {
+            //         if(data.message === "Done"){
+            //             alert("successfuly booked the hotel.. wait our accept mail");
+            //         }
+            //     })
+            // }
+
+
+
+
+    function booking(hotel) {
+        const dialog = document.querySelector("#myModal");
+
+        const modal = document.createElement("div");
+        modal.classList.add("modal-content");
+        modal.innerHTML = `
+            <span class="close" id="closeBtn" onclick="closeModal()">&times;</span>
+            <h3>Select the date</h3>
+            <form class="modal-form" onsubmit="submitBooking(event, '${hotel}')">
+                <label>
+                    start date
+                    <input type="date" id="start-date" required>
+                </label>
+                <label>
+                    end date
+                    <input type="date" id="end-date" required>
+                </label>
+                <button type="submit" class="btn btn-success btn-sm">Book Now</button>
+            </form>
+        `;
+        
+        // Clear previous content and append new modal content
+        dialog.innerHTML = '';
+        dialog.appendChild(modal);
+        
+        // Display the modal
+        dialog.style.display = "block";
+    }
+
+    function submitBooking(event, hotel) {
+        event.preventDefault();
+        
+        // Get the selected start date
+        const startDate = document.getElementById('start-date').value;
+        const endDate = document.getElementById('end-date').value;
+        
+        // Perform booking logic here (e.g., fetch request)
+        const user = localStorage.getItem("userId");
+        fetch(`https://projectone-h83j.onrender.com/boking/${user}/${hotel}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                startDate: startDate,
+                endDate: endDate, })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Done") {
+                alert("Successfully booked the hotel. Please wait for our confirmation email.");
+                closeModal();
+            } else {
+                alert("Booking failed. Please try again later.");
             }
-            function trips(){
-                sessionStorage.removeItem("city");
-                location.href = "trips.html";
-            }
-            function hotels(){
-                sessionStorage.removeItem("city");
-                location.href = "hotels.html";
-            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred while booking. Please try again later.");
+        });
+    }
+
+    function closeModal(){
+        const modal = document.querySelector("#myModal");
+        modal.style.display = "none";
+    }
+
+
+
+    function trips(){
+        sessionStorage.removeItem("city");
+        location.href = "trips.html";
+    }
+    function hotels(){
+        sessionStorage.removeItem("city");
+        location.href = "hotels.html";
+    }
     </script>
     <script src="js/main.js"></script>
 </body>
