@@ -9785,3 +9785,10 @@ h6,
   padding: 0;
   list-style-type: none;
 }
+
+
+.program {
+  padding:10px;
+  margin: 20px 0;
+  background: white;
+}

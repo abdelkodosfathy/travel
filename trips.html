@@ -285,6 +285,7 @@
             if(city){
                 console.log(city);
                 data.trips.forEach(element => {
+                const tripDate = formatDate(element.tripDate);
                 if(element.cityname === city){
                     const trip = document.createElement("div");
                     trip.classList.add("col-lg-4" , "col-md-6" , "mb-4")
@@ -298,8 +299,11 @@
                                 <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Person</small>
                             </div>
                             <div class="d-flex justify-content-between w-100">
+                                <a class="h5 text-decoration-none">trip date: ${tripDate}</a>
+                            </div>
+                            <div class="d-flex justify-content-between w-100">
                                 <a class="h5 text-decoration-none">${element.tripname}</a>
-                                <button class="btn btn-success btb-sm " id="myBtn" onclick="booking('${element._id}')">book now</button>
+                                <button class="btn btn-success btb-sm " id="myBtn" onclick="booking('${element._id}', '${element.tripDate}')">book now</button>
                             </div>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
@@ -317,6 +321,7 @@
             }else {
                 data.trips.forEach(element => {
                 const trip = document.createElement("div");
+                const tripDate = formatDate(element.tripDate);    
                 trip.classList.add("col-lg-4" , "col-md-6" , "mb-4");
                 trip.innerHTML = `
                 <div class="package-item bg-white mb-2">
@@ -328,8 +333,11 @@
                             <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Person</small>
                         </div>
                         <div class="d-flex justify-content-between w-100">
+                            <a class="h5 text-decoration-none">trip date: ${tripDate}</a>
+                        </div>
+                        <div class="d-flex justify-content-between w-100">
                             <a class="h5 text-decoration-none">${element.tripname}</a>
-                            <button class="btn btn-success btb-sm " id="myBtn" onclick="booking('${element._id}')">book now</button>
+                            <button class="btn btn-success btb-sm " id="myBtn" onclick="booking('${element._id}','${element.tripDate}')">book now</button>
                         </div>
                         <div class="border-top mt-4 pt-4">
                             <div class="d-flex justify-content-between">
@@ -345,67 +353,35 @@
                 });
             }
         });
-
-        function booking(trip) {
-            const dialog = document.querySelector("#myModal");
-
-            const modal = document.createElement("div");
-            modal.classList.add("modal-content");
-            modal.innerHTML = `
-                <span class="close" id="closeBtn" onclick="closeModal()">&times;</span>
-                <h3>Select the date</h3>
-                <form class="modal-form" onsubmit="submitBooking(event, '${trip}')">
-                    <lable>
-                        start date
-                        <input type="date" id="start-date" required>
-                    </lable>
-                    <button type="submit" class="btn btn-success btn-sm">Book Now</button>
-                </form>
-            `;
-            
-            // Clear previous content and append new modal content
-            dialog.innerHTML = '';
-            dialog.appendChild(modal);
-            
-            // Display the modal
-            dialog.style.display = "block";
-        }
-
-        function submitBooking(event, trip) {
-            event.preventDefault();
-            
-            // Get the selected start date
-            const startDate = document.getElementById('start-date').value;
-            
-            // Perform booking logic here (e.g., fetch request)
+        function booking(trip, startDate, endDate){
             const user = localStorage.getItem("userId");
+            console.log(trip, startDate, endDate);
+            console.log(user);
             fetch(`https://projectone-h83j.onrender.com/boking/${user}/${trip}`, {
-                method: "POST",
+                method: "post",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ startDate: startDate })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === "Done") {
-                    alert("Successfully booked the trip. Please wait for our confirmation email.");
-                    closeModal();
-                } else {
-                    alert("Booking failed. Please try again later.");
+                body: JSON.stringify({
+                startDate: startDate})
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if(data.message === "Done"){
+                    alert("successfuly booked the trip.. wait our accept mail");
+                }
+                else {
+                    console.log("??");
                 }
             })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("An error occurred while booking. Please try again later.");
-            });
         }
-
-        function closeModal() {
-            const dialog = document.querySelector("#myModal");
-            dialog.style.display = "none";
-        }
-
+        function formatDate(inputDate) {
+          const date = new Date(inputDate);
+          const year = date.getFullYear();
+          const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero based
+          const day = ('0' + date.getDate()).slice(-2);
+          return `${year}/${month}/${day}`;
+      }
 
         function trips(){
             sessionStorage.removeItem("city");

@@ -278,12 +278,18 @@
             if(data.message === "done"){
                 programsContainer.innerHTML = '';
                 data.programs.forEach((program, i) => {
+                    const startDate = formatDate(program.programStartDate);
+                    const endDate = formatDate(program.programEndDate);
                     const createdProgram = document.createElement("div");
                     createdProgram.classList.add("program");
                     createdProgram.innerHTML = `
-                    <div class="d-flex mt-5">
+                    <div class="mt-5">
                         <h3 class=" mb-2">${program.program_name}</h3>
-                        <button class="btn btn-success btb-sm mx-3" onclick="booking('${program._id}')">
+                        <div >
+                            <h4 class=" mb-2">start: ${startDate}</h4>
+                            <h4 class=" mb-2">end: ${endDate}</h4>
+                        </div>
+                        <button class="btn btn-success btb-sm" onclick="booking('${program._id}','${program.programStartDate}','${program.programEndDate}')">
                             book now
                         </button>
                     </div>
@@ -332,12 +338,18 @@
                 });
             }
         })
-        function booking(program){
+        function booking(program, startDate, endDate){
             const user = localStorage.getItem("userId");
-            console.log(program);
+            console.log(program, startDate, endDate);
             console.log(user);
             fetch(`https://projectone-h83j.onrender.com/boking/${user}/${program}`, {
-                method: "post"
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                startDate: startDate,
+                endDate: endDate, })
             }).then(response => {
                 return response.json();
             }).then(data => {
@@ -352,7 +364,13 @@
 
 
 
-
+        function formatDate(inputDate) {
+          const date = new Date(inputDate);
+          const year = date.getFullYear();
+          const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero based
+          const day = ('0' + date.getDate()).slice(-2);
+          return `${year}/${month}/${day}`;
+      }
 
         function trips(){
             sessionStorage.removeItem("city");
