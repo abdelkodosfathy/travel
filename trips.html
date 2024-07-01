@@ -13,7 +13,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -27,46 +27,46 @@
 
     <style>
         .modal {
-        display: none; 
-        position: fixed; 
-        z-index: 10;
-        left: 0;
-        top: 0;
-        width: 100%; 
-        height: 100%; 
-        overflow: auto; 
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.4); 
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
         }
-        .modal-form{
-
-        display: flex;
-        flex-direction: column;
+        
+        .modal-form {
+            display: flex;
+            flex-direction: column;
         }
+        
         .modal-content {
-        background-color: #fefefe;
-        top: 50%;
-        transform: translateY(-50%);
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
+            background-color: #fefefe;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
         }
-
+        
         .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
         }
-
+        
         .close:hover,
         .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
         }
-
     </style>
 </head>
 
@@ -82,7 +82,7 @@
             }
         });
     </script>
-        <!-- Topbar Start -->
+    <!-- Topbar Start -->
     <div class="container-fluid bg-light pt-3 d-none d-lg-block">
         <div class="container">
             <div class="row">
@@ -172,12 +172,12 @@
 
 
 
-     <!-- Packages Start -->
-     <div class="container-fluid py-5">
+    <!-- Packages Start -->
+    <div class="container-fluid py-5">
         <div class="container pt-5 pb-3">
             <div class="text-center mb-3 pb-3">
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Trips</h6>
-                <h1>Pefect Tour Trips</h1>
+                <h1>Perfect Tour Trips</h1>
             </div>
             <div class="row trips-container">
                 <div class="loading-icon">
@@ -189,14 +189,14 @@
     <!-- Packages End -->
 
 
-       <!-- Footer Start -->
-       <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
         <div class="row pt-5">
             <div class="col-lg-3 col-md-6 mb-5">
                 <a href="" class="navbar-brand">
                     <h1 class="text-primary"><span class="text-white">Key Of Tra</span>vel</h1>
                 </a>
-                <p>Sed ipsum clita tempor ipsum ipsum amet sit ipsum lorem amet labore rebum lorem ipsum dolor. No sed vero lorem dolor dolor</p>
+                <p>Welcome to Key of Travel. Find the best places to visit, travel tips, and trip plans. Start your adventure now!</p>
                 <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Follow Us</h6>
                 <div class="d-flex justify-content-start">
                     <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
@@ -229,10 +229,15 @@
             </div>
             <div class="col-lg-3 col-md-6 mb-5">
                 <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contact Us</h5>
-                <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, AzabIbrahim ARD el shirka</p>
+                <!-- <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, AzabIbrahim ARD el shirka</p> -->
+                <p><i class="fa fa-map-marker-alt mr-2"></i>
+                    <!-- 123 Street, AzabIbrahim ARD el shirka -->
+                    23/22 ibrahim Nagy st. souq elsayarat El Hey El Asher Nasr City, Cairo Egypt, 11826
+
+                </p>
                 <p><i class="fa fa-phone-alt mr-2"></i>01225596518</p>
                 <p><i class="fa fa-envelope mr-2"></i>Key Of Travel</p>
-                
+
             </div>
         </div>
     </div>
@@ -248,8 +253,8 @@
             <button type="submit">book the trip</button>
           </form>
         </div> -->
-      
-      </div>
+
+    </div>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
@@ -272,6 +277,26 @@
     <script>
         const city = sessionStorage.getItem("city");
         fetch('https://projectone-h83j.onrender.com/trip')
+<<<<<<< HEAD
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.trips);
+                const tripsContainer = document.querySelector(".trips-container");
+                tripsContainer.innerHTML = '';
+                if (city) {
+                    console.log(city);
+                    data.trips.forEach(element => {
+                        const tripDate = formatDate(element.tripDate);
+                        if (element.cityname === city) {
+                            const trip = document.createElement("div");
+                            trip.classList.add("col-lg-4", "col-md-6", "mb-4")
+                            trip.innerHTML = `
+=======
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -290,6 +315,7 @@
                     const trip = document.createElement("div");
                     trip.classList.add("col-lg-4" , "col-md-6" , "mb-4")
                     trip.innerHTML = `
+>>>>>>> a2c917481ae598c50abbff91d1fa85c7ce287163
                     <div class="package-item bg-white mb-2">
                         <img class="img-fluid" src="${element.image.secure_url}" alt="">
                         <div class="p-4">
@@ -314,6 +340,18 @@
                         </div>
                     </div>
                     `
+<<<<<<< HEAD
+                            tripsContainer.appendChild(trip)
+                            console.log(element)
+                        }
+                    });
+                } else {
+                    data.trips.forEach(element => {
+                        const trip = document.createElement("div");
+                        const tripDate = formatDate(element.tripDate);
+                        trip.classList.add("col-lg-4", "col-md-6", "mb-4");
+                        trip.innerHTML = `
+=======
                     tripsContainer.appendChild(trip)
                     console.log(element)
                 }
@@ -324,6 +362,7 @@
                 const tripDate = formatDate(element.tripDate);    
                 trip.classList.add("col-lg-4" , "col-md-6" , "mb-4");
                 trip.innerHTML = `
+>>>>>>> a2c917481ae598c50abbff91d1fa85c7ce287163
                 <div class="package-item bg-white mb-2">
                     <img class="img-fluid" src="${element.image.secure_url}" alt="">
                     <div class="p-3">
@@ -348,12 +387,75 @@
                     </div>
                 </div>
                 `
+<<<<<<< HEAD
+                        tripsContainer.appendChild(trip)
+                        console.log(element);
+                    });
+                }
+            });
+
+        // function booking(trip, startDate, endDate) {
+        //     const user = localStorage.getItem("userId");
+        //     console.log(trip, startDate, endDate);
+        //     console.log(user);
+        //     fetch(`https://projectone-h83j.onrender.com/boking/${user}/${trip}`, {
+        //         method: "post",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         body: JSON.stringify({
+        //             startDate: startDate
+        //         })
+        //     }).then(response => {
+        //         return response.json();
+        //     }).then(data => {
+        //         if (data.message === "Done") {
+        //             alert("successfuly booked the trip.. wait our accept mail");
+        //         } else {
+        //             console.log("??");
+        //         }
+        //     })
+        // }
+        function booking(hotel) {
+            const dialog = document.querySelector("#myModal");
+
+            const modal = document.createElement("div");
+            modal.classList.add("modal-content");
+            modal.innerHTML = `
+                <span class="close" id="closeBtn" onclick="closeModal()">&times;</span>
+                <h3>Select the date</h3>
+                <form class="modal-form" onsubmit="submitBooking(event, '${hotel}')">
+                    <label>
+                        start date
+                        <input type="date" id="start-date" required>
+                    </label>
+                    <button type="submit" class="btn btn-success btn-sm">Book Now</button>
+                </form>
+            `;
+            
+            // Clear previous content and append new modal content
+            dialog.innerHTML = '';
+            dialog.appendChild(modal);
+            
+            // Display the modal
+            dialog.style.display = "block";
+        }
+
+
+        function submitBooking(event, trip) {
+            event.preventDefault();
+            
+            // Get the selected start date
+            const startDate = document.getElementById('start-date').value;
+            // Perform booking logic here (e.g., fetch request)
+=======
                 tripsContainer.appendChild(trip)
                 console.log(element);
                 });
             }
         });
         function booking(trip, startDate, endDate){
+>>>>>>> a2c917481ae598c50abbff91d1fa85c7ce287163
             const user = localStorage.getItem("userId");
             console.log(trip, startDate, endDate);
             console.log(user);
@@ -363,6 +465,17 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
+<<<<<<< HEAD
+                    startDate: startDate})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Done") {
+                    alert("Successfully booked the trip. Please wait for our confirmation email.");
+                    closeModal();
+                } else {
+                    alert("Booking failed. Please try again later.");
+=======
                 startDate: startDate})
             }).then(response => {
                 return response.json();
@@ -372,9 +485,23 @@
                 }
                 else {
                     console.log("??");
+>>>>>>> a2c917481ae598c50abbff91d1fa85c7ce287163
                 }
             })
         }
+<<<<<<< HEAD
+
+
+        function formatDate(inputDate) {
+            const date = new Date(inputDate);
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero based
+            const day = ('0' + date.getDate()).slice(-2);
+            return `${year}/${month}/${day}`;
+        }
+
+        function trips() {
+=======
         function formatDate(inputDate) {
           const date = new Date(inputDate);
           const year = date.getFullYear();
@@ -384,16 +511,19 @@
       }
 
         function trips(){
+>>>>>>> a2c917481ae598c50abbff91d1fa85c7ce287163
             sessionStorage.removeItem("city");
             location.href = "trips.html";
         }
-        function hotels(){
+
+        function hotels() {
             sessionStorage.removeItem("city");
             location.href = "hotels.html";
         }
 
         let closeBtn = document.getElementsById("closeBtn");
-        function closeModal(){
+
+        function closeModal() {
             const modal = document.querySelector("#myModal")
             modal.style.display = "none";
         }
